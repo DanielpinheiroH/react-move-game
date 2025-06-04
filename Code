@@ -77,3 +77,69 @@ const App = () => {
 };
 
 export default App;
+
+
+*css* 
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #282c34;
+  color: white;
+}
+
+.game-container {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  margin: 50px auto;
+  border: 3px solid white;
+  background-color: #20232a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score {
+  font-size: 24px;
+  margin: 20px;
+}
+
+.player {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #61dafb;
+  border-radius: 5px;
+  transition: top 0.1s, left 0.1s;
+}
+
+.coin {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: gold;
+  border-radius: 50%;
+}
+
+.reset-button {
+  margin-top: 650px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+*jsx*
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './App.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
