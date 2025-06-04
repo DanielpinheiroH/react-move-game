@@ -1,1 +1,8 @@
-
+ Estrutura
+bash
+Copiar
+Editar
+/src
+ └── App.jsx
+ └── index.js
+ └── App.css
