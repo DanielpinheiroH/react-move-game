@@ -1,8 +1,79 @@
- Estrutura
-bash
-Copiar
-Editar
+
+  *  bash
 /src
  └── App.jsx
  └── index.js
  └── App.css
+
+*jsx*
+
+import React, { useState, useEffect } from 'react';
+import './App.css';
+
+const App = () => {
+  const [playerPos, setPlayerPos] = useState({ x: 50, y: 50 });
+  const [coinPos, setCoinPos] = useState(getRandomPosition());
+  const [score, setScore] = useState(0);
+
+  function getRandomPosition() {
+    const x = Math.floor(Math.random() * 90);
+    const y = Math.floor(Math.random() * 90);
+    return { x, y };
+  }
+
+  const handleKeyDown = (e) => {
+    setPlayerPos((prev) => {
+      let newX = prev.x;
+      let newY = prev.y;
+
+      if (e.key === 'ArrowUp') newY = Math.max(0, prev.y - 5);
+      if (e.key === 'ArrowDown') newY = Math.min(95, prev.y + 5);
+      if (e.key === 'ArrowLeft') newX = Math.max(0, prev.x - 5);
+      if (e.key === 'ArrowRight') newX = Math.min(95, prev.x + 5);
+
+      return { x: newX, y: newY };
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const dx = playerPos.x - coinPos.x;
+    const dy = playerPos.y - coinPos.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 5) {
+      setScore((prev) => prev + 1);
+      setCoinPos(getRandomPosition());
+    }
+  }, [playerPos, coinPos]);
+
+  const resetGame = () => {
+    setPlayerPos({ x: 50, y: 50 });
+    setCoinPos(getRandomPosition());
+    setScore(0);
+  };
+
+  return (
+    <div className="game-container">
+      <div className="score">Pontuação: {score}</div>
+
+      <div
+        className="player"
+        style={{ left: `${playerPos.x}%`, top: `${playerPos.y}%` }}
+      ></div>
+
+      <div
+        className="coin"
+        style={{ left: `${coinPos.x}%`, top: `${coinPos.y}%` }}
+      ></div>
+
+      <button className="reset-button" onClick={resetGame}>Reiniciar Jogo</button>
+    </div>
+  );
+};
+
+export default App;
